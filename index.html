@@ -1,0 +1,104 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Probabilidades no Futebol: Série A, Série B, Libertadores e Premier League</title>
+<meta name="description" content="Probabilidade de título, Libertadores, acesso e rebaixamento do Brasileirão e da Premier League, com tabelas atualizadas e simulação.">
+<meta property="og:title" content="Probabilidades no Futebol"><meta property="og:description" content="Chances de título, vaga e rebaixamento calculadas por simulação."><meta property="og:type" content="website">
+<link rel="canonical" href="https://SEU-DOMINIO.com.br/">
+<style>
+:root{--bg:#f6f8f5;--card:#fff;--tx:#14231a;--mut:#5b6b60;--ac:#0f7a3d;--ac2:#f2b705;--bd:#dde5dd;--hd:#0c3d22;--red:#c0392b;--blue:#1f6fb2;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0e1511;--card:#16201a;--tx:#e7f0e9;--mut:#93a699;--ac:#3fbf72;--bd:#26362c;--hd:#08150d;--red:#ef6b5c;--blue:#5aa9e6}}
+:root[data-theme="dark"]{--bg:#0e1511;--card:#16201a;--tx:#e7f0e9;--mut:#93a699;--ac:#3fbf72;--bd:#26362c;--hd:#08150d;--red:#ef6b5c;--blue:#5aa9e6}
+*{box-sizing:border-box}html{scroll-padding-top:env(safe-area-inset-top,0px)}
+body{margin:0;background:var(--bg);color:var(--tx);font:16px/1.5 system-ui,-apple-system,"Segoe UI",Roboto,sans-serif}
+header{background:var(--hd);color:#fff;padding:14px 20px}
+.nav{max-width:1000px;margin:auto;display:flex;gap:18px;align-items:center;flex-wrap:wrap}
+.nav b{font-size:18px;margin-right:auto}.nav a{color:#cfe6d6;text-decoration:none;font-size:14px}.nav a:hover{color:#fff}
+.hero{background:linear-gradient(135deg,var(--hd),#14633a);color:#fff;text-align:center;padding:40px 20px}
+.hero h1{margin:0 0 6px;font-size:clamp(28px,6vw,44px)}.hero p{margin:0;color:#cfe6d6}
+main{max-width:1000px;margin:auto;padding:20px}
+.tabs{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:14px}
+.tabs button{border:1px solid var(--bd);background:var(--card);color:var(--tx);padding:8px 14px;border-radius:20px;font:inherit;font-size:14px;cursor:pointer}
+.tabs button.on{background:var(--ac);border-color:var(--ac);color:#fff}
+.card{background:var(--card);border:1px solid var(--bd);border-radius:12px;padding:16px;margin-bottom:16px}
+.tabs.lg button{font-weight:700}.sw{display:inline-block;width:14px;height:14px;border-radius:50%;border:1px solid var(--bd);margin-right:8px;vertical-align:-2px}.ad{min-height:90px;margin:0 0 16px;text-align:center}footer a{color:var(--ac)}#ck{position:fixed;left:0;right:0;bottom:0;background:var(--card);border-top:1px solid var(--bd);padding:12px 16px calc(12px + env(safe-area-inset-bottom,0px));display:flex;gap:12px;align-items:center;justify-content:center;flex-wrap:wrap;font-size:13px;z-index:20}#ck button{border:0;background:var(--ac);color:#fff;padding:8px 14px;border-radius:8px;font:inherit;cursor:pointer}.card h2{margin:0 0 4px;font-size:20px}.sub{color:var(--mut);font-size:13px;margin:0 0 12px}
+.sc{overflow-x:auto}table{border-collapse:collapse;width:100%;font-size:14px}
+th,td{padding:7px 8px;text-align:right;border-bottom:1px solid var(--bd);white-space:nowrap}th{color:var(--mut);font-weight:600;font-size:12px}
+th:nth-child(2),td:nth-child(2){text-align:left}
+.bar{display:inline-block;height:8px;border-radius:4px;background:var(--ac);vertical-align:middle;margin-right:6px}
+.g{border-left:4px solid var(--blue)}.r{border-left:4px solid var(--red)}.c{border-left:4px solid var(--ac2)}.s{border-left:4px solid #8e6bd0}
+select{font:inherit;padding:8px;border-radius:8px;border:1px solid var(--bd);background:var(--card);color:var(--tx)}.match{display:grid;grid-template-columns:1fr auto 1fr;gap:8px;align-items:center;padding:8px 0;border-bottom:1px solid var(--bd);font-size:14px}
+.match .h{text-align:right}.pb{grid-column:1/-1;display:flex;height:8px;border-radius:4px;overflow:hidden}
+.pb i{display:block}.lg{display:flex;justify-content:space-between;grid-column:1/-1;font-size:12px;color:var(--mut)}
+.stats{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:12px}
+.stat{background:var(--bg);border-radius:10px;padding:12px}.stat small{color:var(--mut)}.stat div{font-size:20px;font-weight:700}
+footer{text-align:center;color:var(--mut);font-size:12px;padding:20px}
+</style>
+</head>
+<body>
+<header><div class="nav"><b>⚽ Probabilidades no Futebol</b><a href="#">Série A</a><a href="#">Série B</a><a href="#">Libertadores</a><a href="#">Premier League</a><a href="#">Blog</a></div></header>
+<section class="hero"><h1 id="ttl">Série A</h1><p id="stl"></p></section>
+<main>
+<div class="tabs" id="lgs"></div><div class="tabs" id="tabs"></div><p class="sub" id="note"></p><div class="ad" id="ad1" hidden></div>
+<div id="view"></div>
+</main>
+<div class="ad" id="ad2" hidden></div><footer>As probabilidades vêm de um modelo simplificado próprio (simulação de Monte Carlo, 4.000 temporadas), não oficial, apenas informativo. Não é recomendação de aposta. Conteúdo para maiores de 18 anos; jogue com responsabilidade.<br><a href="privacidade.html">Privacidade</a> · <a href="termos.html">Termos de uso</a></footer>
+<script>
+var C={"Flamengo":["#c8102e","#000"],"Palmeiras":["#006437","#fff"],"Cruzeiro":["#0033a0","#fff"],"Fluminense":["#7a0019","#00913f"],"Athletico-PR":["#c8102e","#000"],"Bahia":["#0057b8","#d9262c"],"Atlético-MG":["#000","#fff"],"Bragantino":["#d9262c","#fff"],"Santos":["#000","#fff"],"São Paulo":["#d9262c","#000"],"Botafogo":["#000","#fff"],"Coritiba":["#00553a","#fff"],"Vasco":["#000","#fff"],"Mirassol":["#f6c200","#00704a"],"Vitória":["#d9262c","#000"],"Internacional":["#d9262c","#fff"],"Corinthians":["#000","#fff"],"Grêmio":["#0d80bf","#000"],"Remo":["#002a5c","#fff"],"Chapecoense":["#00a859","#fff"],
+"Novorizontino":["#f6c200","#000"],"Juventude":["#00863d","#fff"],"Vila Nova":["#d9262c","#fff"],"Criciúma":["#f6c200","#000"],"Fortaleza":["#0033a0","#d9262c"],"CRB":["#d9262c","#fff"],"Goiás":["#00863d","#fff"],"Sport":["#d9262c","#000"],"Atlético-GO":["#d9262c","#000"],"São Bernardo":["#f6c200","#000"],"Operário-PR":["#000","#fff"],"Botafogo-SP":["#d9262c","#000"],"Cuiabá":["#00863d","#f6c200"],"Athletic":["#000","#fff"],"Náutico":["#d9262c","#fff"],"Ceará":["#000","#fff"],"Avaí":["#0057b8","#fff"],"Londrina":["#0057b8","#fff"],"América-MG":["#00863d","#000"],"Ponte Preta":["#000","#fff"],
+"Estudiantes":["#d9262c","#fff"],"Platense":["#6b3a1e","#fff"],"LDU":["#0033a0","#fff"],"Independiente del Valle":["#000","#0033a0"],
+"Arsenal":["#ef0107","#fff"],"Man City":["#6cabdd","#fff"],"Brighton":["#0057b8","#fff"],"Chelsea":["#034694","#fff"],"Liverpool":["#c8102e","#fff"],"Brentford":["#e30613","#fff"],"Everton":["#003399","#fff"],"Bournemouth":["#d9262c","#000"],"Tottenham":["#132257","#fff"],"Aston Villa":["#670e36","#95bfe5"],"Hull":["#f5a11c","#000"],"Leeds":["#1d428a","#ffd100"],"Newcastle":["#000","#fff"],"Ipswich":["#0057b8","#fff"],"Fulham":["#000","#fff"],"Coventry":["#6cabdd","#fff"],"Man United":["#da291c","#fff"],"Crystal Palace":["#1b458f","#c4122e"],"Forest":["#dd0000","#fff"],"Sunderland":["#eb172b","#fff"]};
+function N(n){var k=C[n]||["#888","#ccc"];return'<i class="sw" style="background:linear-gradient(90deg,'+k[0]+' 50%,'+k[1]+' 50%)"></i>'+n}
+function DC(h,a){var x=C[a[0]],y=C[h[0]];return x[0]==y[0]?x[1]:x[0]}
+function League(c){function col(i){var r="";(c.cz||[]).forEach(function(z){if(i+1>=z[0]&&i+1<=z[1])r=z[2]});return r}var T=c.t,n=T.length,SIM=4000,Z=c.z,zc=Z.map(function(){return{}}),cnt=T.map(function(){return Z.map(function(){return 0})}),tot={};
+function ex(t){var j=t[2],g=1.37+.6*Math.max(-1,Math.min(1,t[6]/j)),q=.5*t[1]/j+.5*g;return(j*q+12*1.37)/(j+12)}
+function wp(t){return Math.min(.75,Math.max(.05,(ex(t)-.27)/3))}
+for(var s=0;s<SIM;s++){var f=T.map(function(t){var p=t[1],w=wp(t);for(var i=c.N-t[2];i>0;i--){var x=Math.random();p+=x<w?3:x<w+.27?1:0}return p});
+var o=f.map(function(v,i){return i}).sort(function(a,b){return(f[b]+T[b][6]/1000+Math.random()*5e-4)-(f[a]+T[a][6]/1000+Math.random()*5e-4)});
+o.forEach(function(i,pos){var p=f[i];tot[p]=(tot[p]||0)+1;Z.forEach(function(z,k){if(pos+1>=z[2]&&pos+1<=z[3]){cnt[i][k]++;zc[k][p]=(zc[k][p]||0)+1}})})}
+function fm(v){return v<.05?"–":v>=99.95?"100%":v.toFixed(1)+"%"}
+function last5(t){return t[7].split("").reduce(function(a,x){return a+(x=="V"?3:x=="E"?1:0)},0)}
+function prob(k){var z=Z[k],r=T.map(function(t,i){return[t[0],cnt[i][k]/SIM*100]}).sort(function(a,b){return b[1]-a[1]}).filter(function(x){return x[1]>=.05});
+return'<div class="card '+z[4]+'"><h2>'+z[0]+'</h2><p class="sub">'+z[1]+'</p><div class="sc"><table><tr><th>#</th><th>Time</th><th>Probabilidade</th></tr>'+r.map(function(x,i){return'<tr><td>'+(i+1)+'</td><td>'+N(x[0])+'</td><td><span class="bar" style="width:'+Math.max(2,x[1])*1.4+'px"></span>'+fm(x[1])+'</td></tr>'}).join('')+'</table></div></div>'}
+function stand(title,sub,pf){var a=T.slice().sort(function(a,b){return pf(b)-pf(a)||(pf==last5?0:b[3]-a[3])||b[6]-a[6]});
+return'<div class="card"><h2>'+title+'</h2><p class="sub">'+sub+'</p><div class="sc"><table><tr><th>#</th><th>Time</th><th>P</th><th>J</th><th>V</th><th>E</th><th>D</th><th>SG</th>'+(c.form?'<th>Últimos 5</th>':'')+'</tr>'+a.map(function(t,i){return'<tr><td class="'+col(i)+'">'+(i+1)+'</td><td>'+N(t[0])+'</td><td><b>'+pf(t)+'</b></td><td>'+t[2]+'</td><td>'+t[3]+'</td><td>'+t[4]+'</td><td>'+t[5]+'</td><td>'+t[6]+'</td>'+(c.form?'<td>'+t[7]+'</td>':'')+'</tr>'}).join('')+'</table></div></div>'}
+function byPts(){var ps=Object.keys(tot).map(Number).filter(function(p){return tot[p]>=SIM*.002}).sort(function(a,b){return a-b});
+return'<div class="card"><h2>Probabilidade por pontuação final</h2><p class="sub">Para um time que termina com X pontos, qual a chance de cada resultado?</p><div class="sc"><table><tr><th>Pontos</th><th></th>'+Z.map(function(z){return'<th>'+z[5]+'</th>'}).join('')+'</tr>'+ps.map(function(p){return'<tr><td><b>'+p+'</b></td><td></td>'+Z.map(function(z,k){return'<td>'+fm((zc[k][p]||0)/tot[p]*100)+'</td>'}).join('')+'</tr>'}).join('')+'</table></div></div>'}
+function st(t,f){var k=0,a=t[7];for(var i=a.length-1;i>=0&&f(a[i]);i--)k++;return k}
+function streak(title,sub,f,cls){var r=T.map(function(t){return[t[0],st(t,f)]}).filter(function(x){return x[1]>0}).sort(function(a,b){return b[1]-a[1]}).slice(0,8);
+return'<div class="card '+cls+'"><h2>'+title+'</h2><p class="sub">'+sub+'</p><div class="sc"><table><tr><th>#</th><th>Time</th><th>Jogos</th></tr>'+(r.map(function(x,i){return'<tr><td>'+(i+1)+'</td><td>'+N(x[0])+'</td><td>'+(x[1]>=5?"5+":x[1])+'</td></tr>'}).join('')||'<tr><td></td><td>Nenhum time</td><td></td></tr>')+'</table></div></div>'}
+function stats(){function top(f,l,g){var m=T.slice().sort(f)[0];return'<div class="stat"><small>'+l+'</small><div>'+N(m[0])+'</div><small>'+g(m)+'</small></div>'}
+var h=top(function(a,b){return b[3]-a[3]},"Mais vitórias",function(m){return m[3]+" vitórias"})+top(function(a,b){return b[5]-a[5]},"Mais derrotas",function(m){return m[5]+" derrotas"})+top(function(a,b){return b[4]-a[4]},"Mais empates",function(m){return m[4]+" empates"})+top(function(a,b){return b[6]-a[6]},"Melhor saldo de gols",function(m){return"+"+m[6]})+top(function(a,b){return a[6]-b[6]},"Pior saldo de gols",function(m){return m[6]});
+if(c.gols)h+=top(function(a,b){return b[8]-a[8]},"Melhor ataque",function(m){return m[8]+" gols"})+top(function(a,b){return a[9]-b[9]},"Melhor defesa",function(m){return m[9]+" gols sofridos"});
+if(c.form)h+=top(function(a,b){return last5(b)-last5(a)},"Melhor fase (5 jogos)",function(m){return last5(m)+" de 15 pontos"});
+return'<div class="card"><h2>Estatísticas</h2><p class="sub">Destaques da temporada.</p><div class="stats">'+h+'</div></div>'}
+function duel(){var h=T[+document.getElementById("h").value],a=T[+document.getElementById("a").value];if(h==a)return"<p>Escolha dois times diferentes.</p>";var rh=ex(h)*1.15,ra=ex(a),w=rh/(rh+ra),ph=w*.73,pa=(1-w)*.73;
+return'<div class="match"><div class="h">'+N(h[0])+'</div><b>x</b><div>'+N(a[0])+'</div><div class="pb"><i style="width:'+ph*100+'%;background:'+C[h[0]][0]+'"></i><i style="width:27%;background:var(--mut)"></i><i style="width:'+pa*100+'%;background:'+DC(h,a)+'"></i></div><div class="lg"><span>'+(ph*100).toFixed(0)+'% mandante</span><span>27% empate</span><span>'+(pa*100).toFixed(0)+'% visitante</span></div></div>'}
+window.U=function(){document.getElementById("out").innerHTML=duel()};
+function conf(){var o=T.map(function(t,i){return'<option value="'+i+'">'+t[0]+'</option>'}).join('');setTimeout(function(){document.getElementById("a").value=1;U()},0);
+return'<div class="card"><h2>Simulador de confronto</h2><p class="sub">Probabilidade de um jogo hipotético, com vantagem de mando.</p><p><select id="h" onchange="U()">'+o+'</select> x <select id="a" onchange="U()">'+o+'</select></p><div id="out"></div></div>'}
+var V={"Probabilidades":function(){return Z.map(function(z,k){return prob(k)}).join('')},"Por pontuação":byPts,"Classificação":function(){return stand("Classificação geral",c.leg,function(t){return t[1]})+(c.form?stand("Classificação dos últimos 5 jogos","Pontos nos 5 jogos mais recentes.",last5):'')}};
+if(c.form)V["Sequências"]=function(){return streak("Sequência de vitórias","Vitórias consecutivas (dentro dos últimos 5 jogos).",function(x){return x=="V"},"g")+streak("Sequência de derrotas","Derrotas consecutivas (dentro dos últimos 5).",function(x){return x=="D"},"r")+streak("Invencibilidade","Jogos sem perder (dentro dos últimos 5).",function(x){return x!="D"},"c")+streak("Sem vitórias","Jogos sem vencer (dentro dos últimos 5).",function(x){return x!="V"},"s")};
+V["Estatísticas"]=stats;V["Confronto"]=conf;return{tabs:V,sub:c.sub,note:"Atualizado em "+c.upd+". "+c.note}}
+
+var D;
+function card(t,s,b){return'<div class="card"><h2>'+t+'</h2>'+(s?'<p class="sub">'+s+'</p>':'')+b+'</div>'}
+function ties(r){return'<div class="sc"><table><tr><th style="text-align:left">Confronto</th><th>Resultado</th><th style="text-align:left">Avançou</th></tr>'+r.map(function(x){return'<tr><td style="text-align:left">'+N(x[0])+' x '+N(x[1])+'</td><td>'+x[2]+'</td><td style="text-align:left"><b>'+x[3]+'</b></td></tr>'}).join('')+'</table></div>'}
+function Cup(c){var f=c.final;return{sub:c.sub,note:"Atualizado em "+c.upd+". "+c.note,tabs:{"Final":function(){return card("Final: "+f[0]+" x "+f[1],f[2],'<p>'+N(f[0])+' <b>x</b> '+N(f[1])+'</p><p class="sub">'+f[3]+'</p>')},"Mata-mata":function(){return c.rounds.map(function(r){return card(r[0],r[1],ties(r[2]))}).join('')}}}}
+var LG={},cur,lgs=document.getElementById("lgs"),tabs=document.getElementById("tabs");
+function build(){Object.keys(D).forEach(function(k){var l=D[k];if(l.cup){LG[k]=Cup(l)}else{l.t=l.teams;l.z=l.zones;LG[k]=League(l)}});}
+function showLg(k){cur=LG[k];[].forEach.call(lgs.children,function(b){b.className=b.textContent==k?"on":""});document.getElementById("ttl").textContent=k;document.getElementById("stl").textContent=cur.sub;document.getElementById("note").textContent=cur.note;tabs.innerHTML="";Object.keys(cur.tabs).forEach(function(t){var b=document.createElement("button");b.textContent=t;b.onclick=function(){showTab(t)};tabs.appendChild(b)});showTab(Object.keys(cur.tabs)[0])}
+function showTab(t){[].forEach.call(tabs.children,function(b){b.className=b.textContent==t?"on":""});document.getElementById("view").innerHTML=cur.tabs[t]()}
+function init(){build();["Série A","Série B","Libertadores","Premier League"].forEach(function(k){var b=document.createElement("button");b.textContent=k;b.onclick=function(){showLg(k)};lgs.appendChild(b)});showLg("Série A")}
+fetch("data.json?v="+Date.now()).then(function(r){return r.json()}).then(function(j){D=j.leagues;init()}).catch(function(){document.getElementById("view").textContent="Não foi possível carregar os dados. Tente novamente em instantes."});
+</script><script>
+// CONFIGURAÇÃO: preencha quando tiver as contas. Vazio = sem anúncios nem métricas.
+var SITE={adsenseId:"",gaId:""};
+(function(){var ok=false;try{ok=localStorage.getItem("ck")=="1"}catch(e){}
+function load(){if(SITE.adsenseId){var a=document.createElement("script");a.async=1;a.crossOrigin="anonymous";a.src="https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client="+SITE.adsenseId;document.head.appendChild(a);["ad1","ad2"].forEach(function(id){var e=document.getElementById(id);e.hidden=false;e.innerHTML='<ins class="adsbygoogle" style="display:block" data-ad-client="'+SITE.adsenseId+'" data-ad-format="auto" data-full-width-responsive="true"></ins>';(window.adsbygoogle=window.adsbygoogle||[]).push({})})}
+if(SITE.gaId){var g=document.createElement("script");g.async=1;g.src="https://www.googletagmanager.com/gtag/js?id="+SITE.gaId;document.head.appendChild(g);window.dataLayer=window.dataLayer||[];window.gtag=function(){dataLayer.push(arguments)};gtag("js",new Date());gtag("config",SITE.gaId)}}
+if(ok){load()}else if(SITE.adsenseId||SITE.gaId){var b=document.createElement("div");b.id="ck";b.innerHTML='<span>Usamos cookies para anúncios e estatísticas. Veja a <a href="privacidade.html">Política de Privacidade</a>.</span><button>Aceitar</button>';b.querySelector("button").onclick=function(){try{localStorage.setItem("ck","1")}catch(e){}b.remove();load()};document.body.appendChild(b)}})();
+</script>
+</body></html>
